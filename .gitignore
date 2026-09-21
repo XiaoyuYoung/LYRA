@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Environments and local configuration
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Credentials and keys
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*
+secrets*
+
+# Data, model weights, checkpoints, and generated outputs
+data/
+external_data/
+datasets/
+models/
+checkpoints/
+outputs/
+results/
+predictions/
+wandb/
+runs/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.arrow
+*.parquet
+*.jsonl
+*.jsonl.gz
+
+# Logs and local job artifacts
+*.log
+*.out
+*.err
+nohup.out
+slurm-*
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*~
