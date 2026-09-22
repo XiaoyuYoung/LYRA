@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="images/icon.png" alt="LYRA icon" width="90" align="left">
+<img src="images/icon.png" alt="LYRA icon" width="100" align="left">
 
 <h1>The Sirens’ Song:When Proximal Background Context Overshadows Distant Evidence</h1>
 
