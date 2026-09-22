@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="LYRA reveals the Proximity Trap in long-context language models and preserves distant evidence under nearby background competition.">
+  <meta name="keywords" content="LYRA, long-context language models, attention, Proximity Trap, ProxBench">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+
+  <meta property="og:title" content="The Sirens' Song - LYRA">
+  <meta property="og:description" content="When proximal background context overshadows distant evidence.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./static/images/longbench-masking.png">
+
+  <title>The Sirens' Song - LYRA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" type="image/png" href="./static/images/icon.png">
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+  <nav class="navbar is-fixed-top project-nav" role="navigation" aria-label="main navigation">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand">
+        <a class="navbar-item brand" href="#top" aria-label="LYRA home">
+          <img src="./static/images/icon.png" alt="" width="34" height="34">
+          <span>LYRA</span>
+        </a>
+        <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="project-navbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div id="project-navbar" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" href="#abstract">Abstract</a>
+          <a class="navbar-item" href="#findings">Findings</a>
+          <a class="navbar-item" href="#method">LYRA</a>
+          <a class="navbar-item" href="#proxbench">ProxBench</a>
+          <a class="navbar-item" href="#results">Results</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero project-hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-vcentered is-variable is-7 hero-columns">
+            <div class="column is-narrow hero-mark-wrap">
+              <img class="hero-mark" src="./static/images/icon.png" alt="LYRA icon">
+            </div>
+            <div class="column">
+              <p class="eyebrow">Long-context relevance alignment</p>
+              <h1 class="title publication-title">The Sirens' Song</h1>
+              <p class="subtitle publication-subtitle">When Proximal Background Context Overshadows Distant Evidence</p>
+              <p class="hero-summary">
+                Long-context models may locate distant evidence yet still fail to use it. LYRA reshapes attention competition so relevant evidence remains distinguishable from abundant nearby background.
+              </p>
+              <div class="buttons publication-links">
+                <a class="button is-dark is-rounded" href="https://github.com/XiaoyuYoung/LYRA" target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">⌘</span><span>Code</span>
+                </a>
+                <a class="button dataset-button is-rounded" href="https://huggingface.co/datasets/MiaoMiaoYang/ProxBench" target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">🤗</span><span>ProxBench</span>
+                </a>
+                <a class="button is-light is-rounded" href="https://github.com/XiaoyuYoung/LYRA#readme" target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">↗</span><span>README</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section teaser-section">
+      <div class="container is-max-desktop">
+        <div class="finding-banner">
+          <div class="banner-copy">
+            <span class="kicker">Counter-intuitive observation</span>
+            <h2>Less attention to nearby background can improve long-context understanding.</h2>
+            <p>Masking context closest to the query raises LongBench-v2 accuracy, with a larger gain on long in-context learning.</p>
+          </div>
+          <figure class="figure-card teaser-figure">
+            <img src="./static/images/longbench-masking.png" alt="LongBench-v2 accuracy improves as nearby tokens are masked">
+            <figcaption>Accuracy as an increasing number of nearby context tokens are masked.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="abstract" class="section section-block">
+      <div class="container is-max-desktop narrow-copy">
+        <div class="section-heading centered-heading">
+          <span class="section-number">01</span>
+          <h2 class="title is-2">Abstract</h2>
+        </div>
+        <div class="content abstract-copy">
+          <p>
+            Long-context language models are commonly evaluated by whether they can retrieve evidence over long distances. We identify a complementary failure mode: distant evidence can be found, yet its signal is diluted by the cumulative competition of abundant, task-irrelevant context close to the query. We call this phenomenon the <strong>Proximity Trap</strong>.
+          </p>
+          <p>
+            We introduce <strong>LYRA</strong>, a t-distributed directional matching mechanism that reshapes query-key score differences before softmax normalization. LYRA preserves relevant evidence according to directional agreement rather than position. Experiments on LongBench-v2, RULER, LongBench, and the controlled ProxBench benchmark show consistent gains across context lengths, task categories, and increasingly confusable proximal interference.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="findings" class="section section-block alt-section">
+      <div class="container is-max-desktop">
+        <div class="section-heading">
+          <span class="section-number">02</span>
+          <div>
+            <h2 class="title is-2">The Proximity Trap</h2>
+            <p class="section-lede">The challenge is not only finding evidence at a distance. It is keeping that evidence visible while nearby tokens compete for the same finite attention mass.</p>
+          </div>
+        </div>
+
+        <div class="columns is-variable is-6 is-vcentered finding-row">
+          <div class="column is-5">
+            <span class="finding-label">Finding 1</span>
+            <h3 class="title is-3">Evidence can be identified and still be overshadowed.</h3>
+            <p>
+              In later layers, the model selectively concentrates on the distant evidence while ordinary tokens in the same neighborhood remain below uniform attention. However, proximal background also receives substantial attention. Its lower per-token weight accumulates across many tokens and dilutes the evidence signal.
+            </p>
+            <div class="insight-chip">Selective retrieval does not guarantee effective utilization.</div>
+          </div>
+          <div class="column is-7">
+            <figure class="figure-card">
+              <img src="./static/images/token-level-attention.png" alt="Layer-wise attention density for distant evidence, evidence neighborhood, and proximal background">
+              <figcaption>Distant evidence is selectively retrieved, but cumulative proximal background remains competitive.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="columns is-variable is-6 is-vcentered finding-row reverse-on-mobile">
+          <div class="column is-7">
+            <figure class="figure-card">
+              <img src="./static/images/paired-interventions.png" alt="Paired changes from moving evidence closer and attenuating proximal background">
+              <figcaption>Attenuating proximal background more consistently restores evidence attention than moving evidence closer.</figcaption>
+            </figure>
+          </div>
+          <div class="column is-5">
+            <span class="finding-label">Finding 2</span>
+            <h3 class="title is-3">Distance alone does not explain the failure.</h3>
+            <p>
+              Moving evidence closer produces mixed changes in evidence attention and answer confidence. In contrast, attenuating nearby background while keeping the evidence and token positions fixed shifts more examples toward higher evidence attention and often higher confidence.
+            </p>
+            <div class="insight-chip">What evidence competes with matters as much as how far away it is.</div>
+          </div>
+        </div>
+
+        <div class="trap-callout">
+          <span>The Proximity Trap</span>
+          <p>Distant evidence can be underused because many individually weak proximal tokens collectively dominate attention competition.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="section section-block method-section">
+      <div class="container is-max-desktop">
+        <div class="section-heading">
+          <span class="section-number">03</span>
+          <div>
+            <h2 class="title is-2">LYRA</h2>
+            <p class="section-lede"><strong>Long-context heavY-tailed Relevance Alignment</strong> preserves distant yet relevant evidence without rewarding distance itself.</p>
+          </div>
+        </div>
+
+        <div class="method-flow" aria-label="LYRA method flow">
+          <div class="method-step">
+            <span class="step-index">1</span>
+            <h3>Directional relevance</h3>
+            <p>Normalize queries and keys, then measure their directional agreement.</p>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="method-step featured-step">
+            <span class="step-index">2</span>
+            <h3>Heavy-tailed reshaping</h3>
+            <p>Compress weak or misleading advantages and amplify strongly aligned matches.</p>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="method-step">
+            <span class="step-index">3</span>
+            <h3>Attention allocation</h3>
+            <p>Apply the usual mask, softmax, and value aggregation to the reshaped scores.</p>
+          </div>
+        </div>
+
+        <div class="columns is-variable is-5 method-notes">
+          <div class="column">
+            <div class="note-card">
+              <span class="note-icon">◎</span>
+              <h3>Relevance, not position</h3>
+              <p>LYRA does not indiscriminately promote distant tokens. It favors evidence that remains directionally aligned with the query.</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="note-card">
+              <span class="note-icon">↔</span>
+              <h3>Drop-in scoring change</h3>
+              <p>Only the query-key scoring stage changes; the rest of the attention pipeline remains intact.</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="note-card">
+              <span class="note-icon">↗</span>
+              <h3>Negligible overhead</h3>
+              <p>The analytical additional computation stays below 0.04% from 8K to 128K context.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proxbench" class="section section-block alt-section">
+      <div class="container is-max-desktop">
+        <div class="section-heading">
+          <span class="section-number">04</span>
+          <div>
+            <h2 class="title is-2">ProxBench</h2>
+            <p class="section-lede">A controlled benchmark that fixes distant evidence while making nearby, irrelevant context progressively more confusable.</p>
+          </div>
+        </div>
+
+        <div class="level-grid">
+          <article class="level-card">
+            <span class="level-number">L1</span>
+            <h3>Style-matched</h3>
+            <p>Similar syntax, but a different entity, topic, and answer relation.</p>
+          </article>
+          <article class="level-card">
+            <span class="level-number">L2</span>
+            <h3>Crossed bindings</h3>
+            <p>Familiar entity and relation cues, with the value bound to another entity.</p>
+          </article>
+          <article class="level-card">
+            <span class="level-number">L3</span>
+            <h3>Mixed entity-relation</h3>
+            <p>The same relation for other entities mixed with target-entity attributes.</p>
+          </article>
+          <article class="level-card">
+            <span class="level-number">L4</span>
+            <h3>Fine-grained</h3>
+            <p>Confusable subtypes, attributes, semantic roles, and value formats.</p>
+          </article>
+        </div>
+
+        <div class="has-text-centered proxbench-action">
+          <a class="button dataset-button is-rounded is-medium" href="https://huggingface.co/datasets/MiaoMiaoYang/ProxBench" target="_blank" rel="noopener noreferrer">Explore ProxBench on Hugging Face ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section section-block results-section">
+      <div class="container is-max-desktop">
+        <div class="section-heading">
+          <span class="section-number">05</span>
+          <div>
+            <h2 class="title is-2">Results</h2>
+            <p class="section-lede">LYRA remains strong across controlled context lengths and under increasingly difficult proximal interference.</p>
+          </div>
+        </div>
+
+        <div class="result-header">
+          <div>
+            <span class="result-tag">Table 2</span>
+            <h3 class="title is-3">Length robustness on RULER</h3>
+          </div>
+          <div class="result-stat">
+            <strong>89.32</strong>
+            <span>average accuracy</span>
+          </div>
+        </div>
+
+        <div class="table-shell">
+          <table class="table is-fullwidth results-table">
+            <thead>
+              <tr>
+                <th>Method</th><th>Venue</th><th>8K</th><th>16K</th><th>32K</th><th>64K</th><th>128K</th><th>Avg.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>FlexPrefill</td><td>ICLR '25</td><td>71.65</td><td>73.89</td><td>75.38</td><td>72.65</td><td>68.51</td><td>72.42</td></tr>
+              <tr><td>XAttention</td><td>ICML '25</td><td>85.63</td><td>82.25</td><td>81.60</td><td>73.18</td><td>69.91</td><td>78.51</td></tr>
+              <tr class="runner-up"><td>ProxyAttn</td><td>ICLR '26</td><td>92.07</td><td>89.75</td><td>86.68</td><td>83.57</td><td>77.09</td><td>85.83</td></tr>
+              <tr><td>S2O</td><td>ACL '26</td><td>85.80</td><td>82.73</td><td>80.34</td><td>73.95</td><td>69.97</td><td>78.56</td></tr>
+              <tr><td>PBS-Attn</td><td>ICML '26</td><td>85.56</td><td>79.34</td><td>80.95</td><td>70.70</td><td>67.90</td><td>76.89</td></tr>
+              <tr class="ours"><td>LYRA</td><td>-</td><td>96.33</td><td>94.19</td><td>93.14</td><td>85.39</td><td>77.56</td><td>89.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="result-copy">
+          LYRA achieves the highest accuracy at every evaluated length. It improves the average over the strongest comparator by <strong>3.49 points</strong>, with the largest gain at 32K (<strong>+6.46</strong>).
+        </p>
+
+        <div class="result-divider"></div>
+
+        <div class="result-header">
+          <div>
+            <span class="result-tag">Figure 4</span>
+            <h3 class="title is-3">Robustness on ProxBench</h3>
+          </div>
+          <div class="result-stat accent-stat">
+            <strong>85.5%</strong>
+            <span>average accuracy</span>
+          </div>
+        </div>
+
+        <figure class="figure-card result-figure">
+          <img src="./static/images/proxbench-comparison.png" alt="Accuracy comparison on four ProxBench difficulty levels and average">
+          <figcaption>LYRA leads on Levels 2-4 and obtains the strongest average result.</figcaption>
+        </figure>
+        <p class="result-copy">
+          Although Llama3.1-8B is slightly stronger at Level 1, LYRA leads at every harder level. At Level 4, LYRA reaches 78% accuracy - <strong>16 points</strong> above the strongest evaluated base model - and exceeds the strongest average baseline by <strong>7.1 points</strong>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer project-footer">
+    <div class="container is-max-desktop">
+      <div class="columns is-vcentered">
+        <div class="column">
+          <div class="footer-brand">
+            <img src="./static/images/icon.png" alt="" width="42" height="42">
+            <div><strong>LYRA</strong><span>Long-context relevance alignment</span></div>
+          </div>
+        </div>
+        <div class="column has-text-right-desktop footer-copy">
+          <p>Website template adapted from <a href="https://nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a>.</p>
+          <p>Template content is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
